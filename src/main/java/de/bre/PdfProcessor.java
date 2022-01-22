@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class PdfProcessor {
 
-    public List<PdfPage> processPdfPages(final List<PdfPage> pdfPages) {
+    public List<PdfPage> process(final List<PdfPage> pdfPages) {
 
         for (PdfPage pdfPage : pdfPages) {
             pdfPage.setText(removeHyphens(pdfPage.getText()));

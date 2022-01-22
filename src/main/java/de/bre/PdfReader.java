@@ -19,7 +19,7 @@ public class PdfReader {
         return new File(fileUrl.getFile());
     }
 
-    public List<PdfPage> parsePdf(final PDDocument document) throws IOException {
+    public List<PdfPage> getPdfPages(final PDDocument document) throws IOException {
         int totalPageCount = document.getNumberOfPages();
         List<PdfPage> pdfPages = stripPdf(document, totalPageCount);
 

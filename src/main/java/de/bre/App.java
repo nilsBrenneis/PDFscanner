@@ -16,10 +16,10 @@ public class App {
         File pdfFile = pdfReader.getPdfFromResourcesByName("B3S.pdf");
         PDDocument pdfDocument = PDDocument.load(pdfFile);
 
-        List<PdfPage> pdfPages = pdfReader.parsePdf(pdfDocument);
+        List<PdfPage> pdfPages = pdfReader.getPdfPages(pdfDocument);
 
         PdfProcessor pdfProcessor = new PdfProcessor();
-        pdfPages = pdfProcessor.processPdfPages(pdfPages);
+        pdfPages = pdfProcessor.process(pdfPages);
 
         for (PdfPage pdfPage : pdfPages) {
             System.out.println("Seite: " + pdfPage.getPageNo() + " --------------------------------------------" +
