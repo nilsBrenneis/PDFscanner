@@ -11,24 +11,29 @@ public class PdfProcessor {
     public List<PdfPage> process(final List<PdfPage> pdfPages) {
 
         for (PdfPage pdfPage : pdfPages) {
-            pdfPage.setText(removeHyphens(pdfPage.getText()));
+            String pageText = pdfPage.getText();
+            pdfPage.setText(removeHyphens(pageText));
         }
 
         return pdfPages;
     }
 
-    private String removeHyphens(final String text) {
-        Pattern hyphenatedWords = Pattern.compile("[a-zA-Z]*[\\-][\\n][a-zA-Z]*");
-        Matcher matcher = hyphenatedWords.matcher(text);
+    private String removeHyphens(final String pageText) {
+        Pattern hyphenatedWordsPattern = Pattern.compile("[a-zA-Z]*[\\-][\\n][a-zA-Z]*");
+        Matcher hyphenatedWordsMatcher = hyphenatedWordsPattern.matcher(pageText);
 
-        String newText = text;
-        while (matcher.find()) {
-            String wordWithHyphen = matcher.group();
-            String wordWithoutHyphen = wordWithHyphen.replace("-\n", "") + "\n";
-
-            newText = newText.replace(wordWithHyphen, wordWithoutHyphen);
+        String pageTextWorkingCopy = pageText;
+        while (hyphenatedWordsMatcher.find()) {
+            pageTextWorkingCopy = replaceFinding(hyphenatedWordsMatcher, pageTextWorkingCopy);
         }
 
-        return newText;
+        return pageTextWorkingCopy;
+    }
+
+    private String replaceFinding(final Matcher matcher, final String text) {
+        String wordWithHyphen = matcher.group();
+        String wordWithoutHyphen = wordWithHyphen.replace("-\n", "") + "\n";
+
+        return text.replace(wordWithHyphen, wordWithoutHyphen);
     }
 }
