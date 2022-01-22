@@ -13,9 +13,15 @@ public class PdfProcessor {
         for (PdfPage pdfPage : pdfPages) {
             String pageText = pdfPage.getText();
             pdfPage.setText(removeHyphens(pageText));
+            pageText = pdfPage.getText();
+            pdfPage.setText(removeLinefeed(pageText));
         }
 
         return pdfPages;
+    }
+
+    private String removeLinefeed(final String pageText) {
+        return pageText.replace("\n", "");
     }
 
     private String removeHyphens(final String pageText) {

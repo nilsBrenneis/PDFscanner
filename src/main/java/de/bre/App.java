@@ -21,6 +21,9 @@ public class App {
         PdfProcessor pdfProcessor = new PdfProcessor();
         pdfPages = pdfProcessor.process(pdfPages);
 
+        CsvWriter csvWriter = new CsvWriter();
+        csvWriter.createCSVFile(pdfPages);
+
         for (PdfPage pdfPage : pdfPages) {
             System.out.println("Seite: " + pdfPage.getPageNo() + " --------------------------------------------" +
                     "------------------------------------------------------");
