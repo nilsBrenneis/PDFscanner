@@ -18,6 +18,9 @@ public class App {
 
         List<PdfPage> pdfPages = pdfReader.parsePdf(pdfDocument);
 
+        PdfProcessor pdfProcessor = new PdfProcessor();
+        pdfPages = pdfProcessor.processPdfPages(pdfPages);
+
         for (PdfPage pdfPage : pdfPages) {
             System.out.println("Seite: " + pdfPage.getPageNo() + " --------------------------------------------" +
                     "------------------------------------------------------");
