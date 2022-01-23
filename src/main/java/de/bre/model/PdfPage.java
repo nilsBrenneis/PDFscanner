@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import java.util.HashMap;
+import java.util.List;
+
 @Data
 @RequiredArgsConstructor
 public class PdfPage {
@@ -13,4 +16,6 @@ public class PdfPage {
 
     @NonNull
     private String text;
+
+    HashMap<String, WordOccurrence> wordsOccurrence = new HashMap<>();
 }

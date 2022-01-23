@@ -1,4 +1,4 @@
-package de.bre;
+package de.bre.pdf;
 
 import de.bre.model.PdfPage;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -42,7 +42,7 @@ public class PdfReader {
     }
 
     private void setPdfPageToStrip(final PDFTextStripper pdfStripper, final int pageNo) {
-        pdfStripper.setStartPage(pageNo - 1);
+        pdfStripper.setStartPage(pageNo);
         pdfStripper.setEndPage(pageNo);
     }
 }

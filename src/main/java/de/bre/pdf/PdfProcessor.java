@@ -1,4 +1,4 @@
-package de.bre;
+package de.bre.pdf;
 
 import de.bre.model.PdfPage;
 
