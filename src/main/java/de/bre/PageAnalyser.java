@@ -16,12 +16,14 @@ public class PageAnalyser {
     }
 
     private void countWordsPerPage(final PdfPage pdfPage) {
-        HashMap<String, WordOccurrence> wordOccurrenceHashMap = getHashMapWithWordsToLookFor(pdfPage);
-        countWordOccurrences(pdfPage, wordOccurrenceHashMap);
+        setHashMapWithWordsToLookFor(pdfPage);
+        countWordOccurrences(pdfPage);
     }
 
-    private void countWordOccurrences(PdfPage pdfPage, HashMap<String, WordOccurrence> wordOccurrenceHashMap) {
+    private void countWordOccurrences(PdfPage pdfPage) {
         String[] words = pdfPage.getText().split("\\s+");
+        HashMap<String, WordOccurrence> wordOccurrenceHashMap = pdfPage.getWordsOccurrence();
+
         for (String word : words) {
             if (wordOccurrenceHashMap.containsKey(word)) {
                 wordOccurrenceHashMap.get(word).addOccurrence();
@@ -29,11 +31,13 @@ public class PageAnalyser {
         }
     }
 
-    private HashMap<String, WordOccurrence> getHashMapWithWordsToLookFor(final PdfPage pdfPage) {
+    private void setHashMapWithWordsToLookFor(final PdfPage pdfPage) {
         HashMap<String, WordOccurrence> wordOccurrenceHashMap = pdfPage.getWordsOccurrence();
+
         for (String wordToLookFor : WordsToLookFor.getWordsAsArray(WordsToLookFor.class)) {
             wordOccurrenceHashMap.put(wordToLookFor, new WordOccurrence());
         }
-        return wordOccurrenceHashMap;
+
+        pdfPage.setWordsOccurrence(wordOccurrenceHashMap);
     }
 }
