@@ -28,11 +28,5 @@ public class App {
 
         CsvWriter csvWriter = new CsvWriter();
         csvWriter.createCSVFile(pdfPages);
-
-        for (PdfPage pdfPage : pdfPages) {
-            System.out.println("Seite: " + pdfPage.getPageNo() + " --------------------------------------------" +
-                    "------------------------------------------------------");
-            System.out.println(pdfPage.getText());
-        }
     }
 }
