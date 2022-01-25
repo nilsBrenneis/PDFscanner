@@ -12,7 +12,7 @@ import java.util.List;
 
 public class PdfReader {
 
-    public File getPdfFromResourcesByName(final String filename) {
+    public File getPdfFromResourceByName(final String filename) {
         ClassLoader classLoader = this.getClass().getClassLoader();
         URL fileUrl = classLoader.getResource(filename);
         assert fileUrl != null;
@@ -20,16 +20,19 @@ public class PdfReader {
     }
 
     public List<PdfPage> getPdfPages(final PDDocument document) throws IOException {
-        int totalPageCount = document.getNumberOfPages();
-        List<PdfPage> pdfPages = stripPdf(document, totalPageCount);
+        List<PdfPage> pdfPages = new ArrayList<>();
 
-        document.close();
+        if (document != null) {
+            stripPdf(document, pdfPages);
+            document.close();
+        }
+
         return pdfPages;
     }
 
-    private ArrayList<PdfPage> stripPdf(PDDocument document, int totalPageCount) throws IOException {
+    private void stripPdf(PDDocument document, final List<PdfPage> pdfPages) throws IOException {
         PDFTextStripper pdfStripper = new PDFTextStripper();
-        ArrayList<PdfPage> pdfPages = new ArrayList<>();
+        int totalPageCount = document.getNumberOfPages();
 
         for (int pageNo = 1; pageNo <= totalPageCount; pageNo++) {
             setPdfPageToStrip(pdfStripper, pageNo);
@@ -38,7 +41,6 @@ public class PdfReader {
             PdfPage page = new PdfPage(pageNo, text);
             pdfPages.add(page);
         }
-        return pdfPages;
     }
 
     private void setPdfPageToStrip(final PDFTextStripper pdfStripper, final int pageNo) {

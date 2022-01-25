@@ -9,13 +9,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Hello world!
- */
 public class App {
     public static void main(String[] args) throws IOException {
         PdfReader pdfReader = new PdfReader();
-        File pdfFile = pdfReader.getPdfFromResourcesByName("B3S.pdf");
+        File pdfFile = pdfReader.getPdfFromResourceByName("B3S.pdf");
         PDDocument pdfDocument = PDDocument.load(pdfFile);
 
         List<PdfPage> pdfPages = pdfReader.getPdfPages(pdfDocument);
