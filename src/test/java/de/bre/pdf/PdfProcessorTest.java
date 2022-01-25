@@ -16,7 +16,7 @@ public class PdfProcessorTest extends TestCase {
     private List<PdfPage> testPdfPages;
 
     private final String pageOneText = "Das ist ein Text, der nicht preprocessed werden soll";
-    private final String pageTwoText = "Das ist die erste Sei-te.\nDen Bindestrich bitte nicht entfernen.\nDie linefeeds aber.";
+    private final String pageTwoText = "Das ist die erste Sei-te.\nDen Bindestrich bitte nicht entfernen.\nDie linefeeds\naber.";
     private final String pageThreeText = "Das ist die zweite Sei-\nte. Hinfort mit dem Bindestrich";
 
     @Before
@@ -46,7 +46,7 @@ public class PdfProcessorTest extends TestCase {
         PdfProcessor pdfProcessor = new PdfProcessor();
         pdfProcessor.preprocess(testPdfPages);
 
-        String expectedText = "Das ist die erste Sei-te.Den Bindestrich bitte nicht entfernen.Die linefeeds aber.";
+        String expectedText = "Das ist die erste Sei-te. Den Bindestrich bitte nicht entfernen. Die linefeeds aber.";
         String actualPdfPage = testPdfPages.get(1).getText();
 
         assertEquals(expectedText, actualPdfPage);
@@ -57,7 +57,7 @@ public class PdfProcessorTest extends TestCase {
         PdfProcessor pdfProcessor = new PdfProcessor();
         pdfProcessor.preprocess(testPdfPages);
 
-        String expectedText = "Das ist die zweite Seite. Hinfort mit dem Bindestrich";
+        String expectedText = "Das ist die zweite Seite . Hinfort mit dem Bindestrich";
         String actualPdfPage = testPdfPages.get(2).getText();
 
         assertEquals(expectedText, actualPdfPage);

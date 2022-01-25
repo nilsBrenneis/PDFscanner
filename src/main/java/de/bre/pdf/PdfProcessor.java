@@ -20,7 +20,7 @@ public class PdfProcessor {
     }
 
     private String removeLinefeed(final String pageText) {
-        return pageText.replace("\n", "");
+        return pageText.replace("\n", " ");
     }
 
     private String removeHyphens(final String pageText) {
