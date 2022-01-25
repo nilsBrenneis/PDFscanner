@@ -18,7 +18,7 @@ public class App {
         List<PdfPage> pdfPages = pdfReader.getPdfPages(pdfDocument);
 
         PdfProcessor pdfProcessor = new PdfProcessor();
-        pdfPages = pdfProcessor.process(pdfPages);
+        pdfProcessor.preprocess(pdfPages);
 
         PageAnalyser pageAnalyser = new PageAnalyser();
         pageAnalyser.countWords(pdfPages);

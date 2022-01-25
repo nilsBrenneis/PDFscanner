@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class PdfProcessor {
 
-    public List<PdfPage> process(final List<PdfPage> pdfPages) {
+    public void preprocess(final List<PdfPage> pdfPages) {
 
         for (PdfPage pdfPage : pdfPages) {
             String pageText = pdfPage.getText();
@@ -17,7 +17,6 @@ public class PdfProcessor {
             pdfPage.setText(removeLinefeed(pageText));
         }
 
-        return pdfPages;
     }
 
     private String removeLinefeed(final String pageText) {
