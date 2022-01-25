@@ -12,6 +12,9 @@ import java.util.stream.Stream;
 
 public class CsvWriter {
 
+    private String pageNoHeader = "Seitennummer";
+    private String textHeader = "Text";
+
     public void createCSVFile(final List<PdfPage> pdfPages) {
         String[] header = getHeader();
 
@@ -26,7 +29,7 @@ public class CsvWriter {
     }
 
     private String[] getHeader() {
-        String[] staticHeaderPart = new String[]{"Seitennummer", "Text"};
+        String[] staticHeaderPart = new String[]{pageNoHeader, textHeader};
         String[] wordsToLookForHeaderPart = WordsToLookFor.getAsArray(WordsToLookFor.class);
         return Stream.of(staticHeaderPart, wordsToLookForHeaderPart)
                 .flatMap(Stream::of)
