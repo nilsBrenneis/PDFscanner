@@ -11,7 +11,9 @@ public enum WordsToLookFor {
     MITARBEITER("Mitarbeiter"),
     ANGESTELLTE("Angestellte"),
     RISIKO("Risiko"),
-    EIGHTA("8a");
+    EIGHTA("8a"),
+    GELTUNGSBEREICH("Geltungsbereich"),
+    BETREIBER("Betreiber");
 
     private final String enumValue;
 
@@ -24,7 +26,7 @@ public enum WordsToLookFor {
         return enumValue;
     }
 
-    public static String[] getWordsAsArray(Class<? extends Enum<?>> e) {
+    public static String[] getAsArray(Class<? extends Enum<?>> e) {
         return Arrays.stream(e.getEnumConstants()).map(Enum::toString).toArray(String[]::new);
     }
 }
