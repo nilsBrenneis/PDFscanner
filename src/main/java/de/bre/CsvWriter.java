@@ -14,10 +14,10 @@ import java.util.stream.Stream;
 
 public class CsvWriter {
 
-    public void createCSVFile(final List<PdfPage> pdfPages) {
+    public void createCSVFile(final List<PdfPage> pdfPages, final String documentName) {
         String[] header = getHeader();
 
-        try (FileWriter writer = new FileWriter("b3s.csv");
+        try (FileWriter writer = new FileWriter(documentName + ".csv");
              CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(header))) {
 
             printRecordsIntoCsv(pdfPages, printer);

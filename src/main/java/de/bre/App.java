@@ -11,8 +11,10 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) throws IOException {
+        final String documentName = "B3S";
+
         PdfReader pdfReader = new PdfReader();
-        File pdfFile = pdfReader.getPdfFromResourceByName("B3S.pdf");
+        File pdfFile = pdfReader.getPdfFromResourceByName(documentName + ".pdf");
         PDDocument pdfDocument = PDDocument.load(pdfFile);
 
         List<PdfPage> pdfPages = pdfReader.getPdfPages(pdfDocument);
@@ -24,6 +26,6 @@ public class App {
         pageAnalyser.countWords(pdfPages);
 
         CsvWriter csvWriter = new CsvWriter();
-        csvWriter.createCSVFile(pdfPages);
+        csvWriter.createCSVFile(pdfPages, documentName);
     }
 }
