@@ -26,7 +26,7 @@ public enum WordsToLookFor {
         return enumValue;
     }
 
-    public static String[] getAsArray(Class<? extends Enum<?>> e) {
+    public static String[] getValuesAsArray(Class<? extends Enum<?>> e) {
         return Arrays.stream(e.getEnumConstants()).map(Enum::toString).toArray(String[]::new);
     }
 }

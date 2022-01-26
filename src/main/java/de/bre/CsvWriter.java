@@ -31,14 +31,14 @@ public class CsvWriter {
         String pageNoHeader = "Seitennummer";
         String textHeader = "Text";
         String[] staticHeaderPart = new String[]{pageNoHeader, textHeader};
-        String[] wordsToLookForHeaderPart = WordsToLookFor.getAsArray(WordsToLookFor.class);
+        String[] wordsToLookForHeaderPart = WordsToLookFor.getValuesAsArray(WordsToLookFor.class);
         return Stream.of(staticHeaderPart, wordsToLookForHeaderPart)
                 .flatMap(Stream::of)
                 .toArray(String[]::new);
     }
 
     private void printRecordsIntoCsv(final List<PdfPage> pdfPages, final CSVPrinter printer) throws IOException {
-        String[] wordsToLookFor = WordsToLookFor.getAsArray(WordsToLookFor.class);
+        String[] wordsToLookFor = WordsToLookFor.getValuesAsArray(WordsToLookFor.class);
         for (PdfPage pdfPage : pdfPages) {
             int[] wordOccurrenceCounts = getWordOccurrenceCounts(wordsToLookFor, pdfPage);
             String[] printRecordValues = getPrintRecordValues(pdfPage, wordOccurrenceCounts);
@@ -62,7 +62,7 @@ public class CsvWriter {
     private int[] getWordOccurrenceCounts(String[] wordsToLookFor, PdfPage pdfPage) {
         int[] wordOccurrenceCount = new int[WordsToLookFor.values().length];
         for (int i = 0; i < wordOccurrenceCount.length; i++) {
-            WordOccurrence wordOccurrence = pdfPage.getWordsOccurrence().get(wordsToLookFor[i]);
+            WordOccurrence wordOccurrence = pdfPage.getWordsOccurrence().get(wordsToLookFor[i].toUpperCase());
             wordOccurrenceCount[i] = wordOccurrence.getOccurrencesCount();
         }
         return wordOccurrenceCount;

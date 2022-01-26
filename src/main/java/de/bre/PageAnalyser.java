@@ -34,8 +34,9 @@ public class PageAnalyser {
     private void setHashMapWithWordsToLookFor(final PdfPage pdfPage) {
         HashMap<String, WordOccurrence> wordOccurrenceHashMap = pdfPage.getWordsOccurrence();
 
-        for (String wordToLookFor : WordsToLookFor.getAsArray(WordsToLookFor.class)) {
-            wordOccurrenceHashMap.put(wordToLookFor, new WordOccurrence());
+        for (Enum wordToLookFor : WordsToLookFor.values()) {
+            String wordToLookForUpperCase = wordToLookFor.toString().toUpperCase();
+            wordOccurrenceHashMap.put(wordToLookForUpperCase, new WordOccurrence());
         }
 
         pdfPage.setWordsOccurrence(wordOccurrenceHashMap);
