@@ -1,19 +1,18 @@
 package de.bre;
 
 import de.bre.model.PdfPage;
+import de.bre.model.WordOccurrence;
 import de.bre.model.WordsToLookFor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
 public class CsvWriter {
-
-    private String pageNoHeader = "Seitennummer";
-    private String textHeader = "Text";
 
     public void createCSVFile(final List<PdfPage> pdfPages) {
         String[] header = getHeader();
@@ -29,6 +28,8 @@ public class CsvWriter {
     }
 
     private String[] getHeader() {
+        String pageNoHeader = "Seitennummer";
+        String textHeader = "Text";
         String[] staticHeaderPart = new String[]{pageNoHeader, textHeader};
         String[] wordsToLookForHeaderPart = WordsToLookFor.getAsArray(WordsToLookFor.class);
         return Stream.of(staticHeaderPart, wordsToLookForHeaderPart)
@@ -36,20 +37,34 @@ public class CsvWriter {
                 .toArray(String[]::new);
     }
 
-    private void printRecordsIntoCsv(List<PdfPage> pdfPages, CSVPrinter printer) throws IOException {
+    private void printRecordsIntoCsv(final List<PdfPage> pdfPages, final CSVPrinter printer) throws IOException {
+        String[] wordsToLookFor = WordsToLookFor.getAsArray(WordsToLookFor.class);
         for (PdfPage pdfPage : pdfPages) {
-            printer.printRecord(pdfPage.getPageNo(), pdfPage.getText(),
-                    pdfPage.getWordsOccurrence().get(WordsToLookFor.B3S.toString()).getOccurrencesCount(),
-                    pdfPage.getWordsOccurrence().get(WordsToLookFor.STANDARD.toString()).getOccurrencesCount(),
-                    pdfPage.getWordsOccurrence().get(WordsToLookFor.ISO.toString()).getOccurrencesCount(),
-                    pdfPage.getWordsOccurrence().get(WordsToLookFor.GESETZ.toString()).getOccurrencesCount(),
-                    pdfPage.getWordsOccurrence().get(WordsToLookFor.INFRASTRUKTUR.toString()).getOccurrencesCount(),
-                    pdfPage.getWordsOccurrence().get(WordsToLookFor.MITARBEITER.toString()).getOccurrencesCount(),
-                    pdfPage.getWordsOccurrence().get(WordsToLookFor.ANGESTELLTE.toString()).getOccurrencesCount(),
-                    pdfPage.getWordsOccurrence().get(WordsToLookFor.RISIKO.toString()).getOccurrencesCount(),
-                    pdfPage.getWordsOccurrence().get(WordsToLookFor.EIGHTA.toString()).getOccurrencesCount(),
-                    pdfPage.getWordsOccurrence().get(WordsToLookFor.GELTUNGSBEREICH.toString()).getOccurrencesCount(),
-                    pdfPage.getWordsOccurrence().get(WordsToLookFor.BETREIBER.toString()).getOccurrencesCount());
+            int[] wordOccurrenceCounts = getWordOccurrenceCounts(wordsToLookFor, pdfPage);
+            String[] printRecordValues = getPrintRecordValues(pdfPage, wordOccurrenceCounts);
+
+            printer.printRecord((Object[]) printRecordValues);
         }
+    }
+
+    private String[] getPrintRecordValues(PdfPage pdfPage, int[] wordOccurrenceCount) {
+        String[] wordOccurrencePrintRecordValues = Arrays.stream(wordOccurrenceCount)
+                .mapToObj(String::valueOf).toArray(String[]::new);
+
+        String[] pageNoAndPageTextPrintRecordValues = new String[]{String.valueOf(
+                pdfPage.getPageNo()), pdfPage.getText()};
+
+        return Stream.of(pageNoAndPageTextPrintRecordValues, wordOccurrencePrintRecordValues)
+                .flatMap(Stream::of)
+                .toArray(String[]::new);
+    }
+
+    private int[] getWordOccurrenceCounts(String[] wordsToLookFor, PdfPage pdfPage) {
+        int[] wordOccurrenceCount = new int[WordsToLookFor.values().length];
+        for (int i = 0; i < wordOccurrenceCount.length; i++) {
+            WordOccurrence wordOccurrence = pdfPage.getWordsOccurrence().get(wordsToLookFor[i]);
+            wordOccurrenceCount[i] = wordOccurrence.getOccurrencesCount();
+        }
+        return wordOccurrenceCount;
     }
 }
