@@ -3,7 +3,6 @@ package de.bre.pdf;
 import de.bre.model.PdfPage;
 import junit.framework.TestCase;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 
 @RunWith(JUnit4.class)
 public class PdfReaderTest extends TestCase {
@@ -23,7 +23,7 @@ public class PdfReaderTest extends TestCase {
     public void createPDDocument() throws IOException {
         ClassLoader classLoader = this.getClass().getClassLoader();
         URL fileUrl = classLoader.getResource("test.pdf");
-        File pdfFile = new File(fileUrl.getFile());
+        File pdfFile = new File(Objects.requireNonNull(fileUrl).getFile());
         pdfDocument = PDDocument.load(pdfFile);
     }
 

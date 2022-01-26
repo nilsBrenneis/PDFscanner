@@ -15,12 +15,13 @@ public class PdfPageProcessorTest extends TestCase {
 
     private List<PdfPage> testPdfPages;
 
-    private final String pageOneText = "Das ist ein Text, der nicht preprocessed werden soll";
-    private final String pageTwoText = "Das ist die erste Sei-te.\nDen Bindestrich bitte nicht entfernen.\nDie linefeeds\naber.";
-    private final String pageThreeText = "Das ist die zweite Sei-\nte. Hinfort mit dem Bindestrich";
-
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
+        final String pageOneText = "Das ist ein Text, dessen Komma fehlen wird";
+        final String pageTwoText = "Das ist die zweite Sei-te.\n" +
+                "Den Binde-Strich bitte entfernen.\nDie linefeeds\nauch.";
+        final String pageThreeText = "Das ist die dritte Sei-\nte. Hinfort mit dem Bindestrich";
+
         testPdfPages = new ArrayList<>();
         PdfPage pdfPageOne = new PdfPage(1, pageOneText);
         PdfPage pdfPageTwo = new PdfPage(2, pageTwoText);
@@ -35,7 +36,7 @@ public class PdfPageProcessorTest extends TestCase {
         PdfPageProcessor pdfPageProcessor = new PdfPageProcessor();
         pdfPageProcessor.preprocess(testPdfPages);
 
-        String expectedText = pageOneText;
+        String expectedText = "DAS IST EIN TEXT DESSEN KOMMA FEHLEN WIRD";
         String actualPdfPage = testPdfPages.get(0).getText();
 
         assertEquals(expectedText, actualPdfPage);
@@ -46,7 +47,7 @@ public class PdfPageProcessorTest extends TestCase {
         PdfPageProcessor pdfPageProcessor = new PdfPageProcessor();
         pdfPageProcessor.preprocess(testPdfPages);
 
-        String expectedText = "Das ist die erste Sei-te. Den Bindestrich bitte nicht entfernen. Die linefeeds aber.";
+        String expectedText = "DAS IST DIE ZWEITE SEITE DEN BINDESTRICH BITTE ENTFERNEN DIE LINEFEEDS AUCH";
         String actualPdfPage = testPdfPages.get(1).getText();
 
         assertEquals(expectedText, actualPdfPage);
@@ -57,7 +58,7 @@ public class PdfPageProcessorTest extends TestCase {
         PdfPageProcessor pdfPageProcessor = new PdfPageProcessor();
         pdfPageProcessor.preprocess(testPdfPages);
 
-        String expectedText = "Das ist die zweite Seite . Hinfort mit dem Bindestrich";
+        String expectedText = "DAS IST DIE DRITTE SEITE  HINFORT MIT DEM BINDESTRICH";
         String actualPdfPage = testPdfPages.get(2).getText();
 
         assertEquals(expectedText, actualPdfPage);

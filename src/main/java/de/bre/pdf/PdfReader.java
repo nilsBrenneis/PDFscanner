@@ -9,14 +9,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PdfReader {
 
     public File getPdfFromResourceByName(final String filename) {
         ClassLoader classLoader = this.getClass().getClassLoader();
         URL fileUrl = classLoader.getResource(filename);
-        assert fileUrl != null;
-        return new File(fileUrl.getFile());
+        return new File(Objects.requireNonNull(fileUrl).getFile());
     }
 
     public List<PdfPage> getPdfPages(final PDDocument document) throws IOException {

@@ -13,9 +13,20 @@ public class PdfPageProcessor {
         for (PdfPage pdfPage : pdfPages) {
             String pageText = pdfPage.getText();
             pdfPage.setText(removeHyphens(pageText));
+
             pageText = pdfPage.getText();
             pdfPage.setText(removeLinefeed(pageText));
+
+            pageText = pdfPage.getText();
+            pdfPage.setText(removePunctuation(pageText));
+
+            pageText = pdfPage.getText();
+            pdfPage.setText(pageText.toUpperCase());
         }
+    }
+
+    private String removePunctuation(final String pageText) {
+        return pageText.replaceAll("\\p{Punct}", "");
     }
 
     private String removeLinefeed(final String pageText) {
