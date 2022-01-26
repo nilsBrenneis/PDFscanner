@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PdfProcessor {
+public class PdfPageProcessor {
 
     public void preprocess(final List<PdfPage> pdfPages) {
 
@@ -16,7 +16,6 @@ public class PdfProcessor {
             pageText = pdfPage.getText();
             pdfPage.setText(removeLinefeed(pageText));
         }
-
     }
 
     private String removeLinefeed(final String pageText) {

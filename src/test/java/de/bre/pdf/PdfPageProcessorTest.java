@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(JUnit4.class)
-public class PdfProcessorTest extends TestCase {
+public class PdfPageProcessorTest extends TestCase {
 
     private List<PdfPage> testPdfPages;
 
@@ -32,8 +32,8 @@ public class PdfProcessorTest extends TestCase {
 
     @Test
     public void preprocess_GivenPdfPageWithNoTextToPreprocess_ShouldReturnUnchangedContent() {
-        PdfProcessor pdfProcessor = new PdfProcessor();
-        pdfProcessor.preprocess(testPdfPages);
+        PdfPageProcessor pdfPageProcessor = new PdfPageProcessor();
+        pdfPageProcessor.preprocess(testPdfPages);
 
         String expectedText = pageOneText;
         String actualPdfPage = testPdfPages.get(0).getText();
@@ -43,8 +43,8 @@ public class PdfProcessorTest extends TestCase {
 
     @Test
     public void preprocess_GivenPdfPageWithNoTextToPreprocess_ShouldReturnContentWithoutLinefeed() {
-        PdfProcessor pdfProcessor = new PdfProcessor();
-        pdfProcessor.preprocess(testPdfPages);
+        PdfPageProcessor pdfPageProcessor = new PdfPageProcessor();
+        pdfPageProcessor.preprocess(testPdfPages);
 
         String expectedText = "Das ist die erste Sei-te. Den Bindestrich bitte nicht entfernen. Die linefeeds aber.";
         String actualPdfPage = testPdfPages.get(1).getText();
@@ -54,8 +54,8 @@ public class PdfProcessorTest extends TestCase {
 
     @Test
     public void preprocess_GivenPdfPageWithNoTextToPreprocess_ShouldReturnContentWithoutHyphens() {
-        PdfProcessor pdfProcessor = new PdfProcessor();
-        pdfProcessor.preprocess(testPdfPages);
+        PdfPageProcessor pdfPageProcessor = new PdfPageProcessor();
+        pdfPageProcessor.preprocess(testPdfPages);
 
         String expectedText = "Das ist die zweite Seite . Hinfort mit dem Bindestrich";
         String actualPdfPage = testPdfPages.get(2).getText();

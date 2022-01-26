@@ -1,7 +1,7 @@
 package de.bre;
 
 import de.bre.model.PdfPage;
-import de.bre.pdf.PdfProcessor;
+import de.bre.pdf.PdfPageProcessor;
 import de.bre.pdf.PdfReader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
@@ -17,8 +17,8 @@ public class App {
 
         List<PdfPage> pdfPages = pdfReader.getPdfPages(pdfDocument);
 
-        PdfProcessor pdfProcessor = new PdfProcessor();
-        pdfProcessor.preprocess(pdfPages);
+        PdfPageProcessor pdfPageProcessor = new PdfPageProcessor();
+        pdfPageProcessor.preprocess(pdfPages);
 
         PageAnalyser pageAnalyser = new PageAnalyser();
         pageAnalyser.countWords(pdfPages);
