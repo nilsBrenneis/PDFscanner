@@ -4,19 +4,23 @@ import de.bre.model.PdfPage;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.stream.Stream;
 
 public class PdfReader {
 
-    public File getPdfFromResourceByName(final String filename) {
-        ClassLoader classLoader = this.getClass().getClassLoader();
-        URL fileUrl = classLoader.getResource(filename);
-        return new File(Objects.requireNonNull(fileUrl).getFile());
+    public List<Path> getPdfPathsFromResourceFolder() throws IOException {
+        List<Path> fileNames = new ArrayList<>();
+
+        try (Stream<Path> paths = Files.walk(Paths.get("./src/main/resources/"))) {
+            paths.filter(Files::isRegularFile).forEach(fileNames::add);
+        }
+        return fileNames;
     }
 
     public List<PdfPage> getPdfPages(final PDDocument document) throws IOException {
