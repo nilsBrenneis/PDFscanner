@@ -33,7 +33,7 @@ public enum WordsToLookFor {
     VERSICHERUNGSWESEN("Versicherungswesen"),
     TRANSPORT("Transport"),
     VERKEHR("Verkehr"),
-    SCHUTZBEDARF("Schutzbedarf"),
+    GEFAHR("Gefahr"),
     GEFAEHRDUNG("Gefährdung"),
     RISIKOMANAGEMENT("Risikomanagement"),
     RISIKO("Risiko"),
